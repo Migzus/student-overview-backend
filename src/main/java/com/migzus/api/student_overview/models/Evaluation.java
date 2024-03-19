@@ -42,6 +42,14 @@ public class Evaluation extends Model {
         lastUpdated = Util.getCurrentDate();
     }
 
+    public Evaluation(Integer grade, Student student, Exercise exercise) {
+        this.grade = grade;
+        this.student = student;
+        this.exercise = exercise;
+
+        lastUpdated = Util.getCurrentDate();
+    }
+
     @Override
     public boolean haveNullFields() {
         return grade == null;

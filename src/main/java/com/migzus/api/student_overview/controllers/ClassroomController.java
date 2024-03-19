@@ -21,6 +21,8 @@ public class ClassroomController extends ControllerTemplate<Classroom> {
     @Autowired
     protected ExerciseRepository exerciseRepository;
 
+    // adding a new classroom, we need to take into account for teachers
+
     @GetMapping("{classroomID}/lecture/{lectureID}/exercise")
     public List<Exercise> getAll(@PathVariable final Integer classroomID, @PathVariable final Integer lectureID) {
         final ArrayList<Exercise> _outExercises = new ArrayList<>();

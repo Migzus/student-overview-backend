@@ -7,4 +7,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("student")
 public class StudentController extends ControllerTemplate<Student> {
+    // student POST request needs an endpoint for adding an existing classroom
 }
