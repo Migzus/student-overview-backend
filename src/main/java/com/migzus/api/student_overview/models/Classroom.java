@@ -38,7 +38,7 @@ public class Classroom extends Model {
 
     @ManyToOne
     @JoinColumn
-    @JsonIncludeProperties(value = { "first_name", "last_name", "email", "phone" })
+    @JsonIncludeProperties(value = { "firstName", "lastName", "email", "phone" })
     private Teacher teacher;
 
     @Override

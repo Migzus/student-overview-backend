@@ -24,12 +24,12 @@ public class Evaluation extends Model {
 
     @ManyToOne
     @JoinColumn
-    @JsonIncludeProperties(value = { "first_name", "last_name", "email" })
+    @JsonIncludeProperties(value = { "firstName", "lastName", "email" })
     private Student student;
 
     @ManyToOne
     @JoinColumn
-    @JsonIncludeProperties(value = { "name", "description", "link_to_repo", "last_updated" })
+    @JsonIncludeProperties(value = { "name", "description", "linkToRepo", "lastUpdated" })
     private Exercise exercise;
 
     public Evaluation() {

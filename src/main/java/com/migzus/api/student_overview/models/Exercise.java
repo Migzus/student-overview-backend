@@ -35,7 +35,7 @@ public class Exercise extends Model {
 
     @ManyToOne
     @JoinColumn
-    @JsonIncludeProperties(value = { "name", "description", "start_date", "end_date" })
+    @JsonIncludeProperties(value = { "name", "description", "startDate", "endDate" })
     private Lecture lecture;
 
     public Exercise() {

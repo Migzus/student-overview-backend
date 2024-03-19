@@ -5,6 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Util {
     public static String getCurrentDate() {
-        return DateTimeFormatter.ofPattern("dd.MM.yyyy").format(LocalDateTime.now());
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
     }
 }
