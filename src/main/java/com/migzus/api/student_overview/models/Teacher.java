@@ -33,6 +33,10 @@ public class Teacher extends Model {
     @JsonIgnoreProperties("teacher")
     private List<Classroom> classrooms;
 
+    @OneToMany(mappedBy = "teacher")
+    @JsonIgnoreProperties("teacher")
+    private List<Note> notes;
+
     @Override
     public boolean haveNullFields() {
         return firstName == null || lastName == null || email == null;
@@ -48,5 +52,6 @@ public class Teacher extends Model {
         phone = _other.phone;
 
         classrooms = _other.classrooms;
+        notes = _other.notes;
     }
 }

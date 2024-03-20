@@ -39,6 +39,14 @@ public class Student extends Model {
     @JsonIncludeProperties(value = { "name", "startDate", "endDate" })
     private Classroom classroom;
 
+    public Student(String firstName, String lastName, String email, String createdAt, Classroom classroom) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.createdAt = createdAt;
+        this.classroom = classroom;
+    }
+
     @Override
     public boolean haveNullFields() {
         return firstName == null || lastName == null || email == null;

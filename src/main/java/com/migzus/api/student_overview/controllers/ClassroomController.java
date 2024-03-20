@@ -2,13 +2,11 @@ package com.migzus.api.student_overview.controllers;
 
 import com.migzus.api.student_overview.models.*;
 import com.migzus.api.student_overview.repositories.ExerciseRepository;
+import com.migzus.api.student_overview.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -16,12 +14,48 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("classroom")
-public class ClassroomController extends ControllerTemplate<Classroom> {
+public class ClassroomController extends AdvancedControllerTemplate<Classroom, ClassroomController.ClassroomRequest> {
     @Autowired
     protected ExerciseRepository exerciseRepository;
+    @Autowired
+    protected TeacherRepository teacherRepository;
 
     // adding a new classroom, we need to take into account for teachers
+
+    public record ClassroomRequest(String name, String startDate, String endDate, Integer teacherId) {
+        public boolean hasNullFields() {
+            return name == null || startDate == null || endDate == null || teacherId == null;
+        }
+    }
+
+    @Override
+    public ResponseEntity<Classroom> create(@RequestBody ClassroomRequest request) {
+        if (request.hasNullFields()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The JSON body has null fields. Make sure you have the appropriate keys.");
+
+        final Teacher _teacher = teacherRepository.findById(request.teacherId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find teacher with that ID."));
+        final Classroom _classroom = new Classroom(request.name, request.startDate, request.endDate, _teacher);
+
+        _teacher.getClassrooms().add(_classroom);
+
+        return new ResponseEntity<>(repository.save(_classroom), HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<Classroom> update(@PathVariable Integer id, @RequestBody ClassroomRequest request) {
+        if (request.hasNullFields()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The JSON body has null fields. Make sure you have the appropriate keys.");
+
+        final Teacher _teacher = teacherRepository.findById(request.teacherId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find teacher with that ID."));
+        final Classroom _classroom = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a classroom with that ID."));
+
+        _classroom.setName(request.name);
+        _classroom.setStartDate(request.startDate);
+        _classroom.setEndDate(request.endDate);
+        _classroom.setTeacher(_teacher);
+
+        return new ResponseEntity<>(repository.save(_classroom), HttpStatus.OK);
+    }
 
     @GetMapping("{classroomID}/lecture/{lectureID}/exercise")
     public List<Exercise> getAll(@PathVariable final Integer classroomID, @PathVariable final Integer lectureID) {

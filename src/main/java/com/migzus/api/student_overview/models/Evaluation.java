@@ -34,12 +34,14 @@ public class Evaluation extends Model {
 
     public Evaluation() {
         grade = 0;
-        lastUpdated = Util.getCurrentDate();
+
+        touch();
     }
 
     public Evaluation(Integer grade) {
         this.grade = grade;
-        lastUpdated = Util.getCurrentDate();
+
+        touch();
     }
 
     public Evaluation(Integer grade, Student student, Exercise exercise) {
@@ -47,6 +49,10 @@ public class Evaluation extends Model {
         this.student = student;
         this.exercise = exercise;
 
+        touch();
+    }
+
+    public void touch() {
         lastUpdated = Util.getCurrentDate();
     }
 
@@ -60,9 +66,10 @@ public class Evaluation extends Model {
         Evaluation _other = (Evaluation) model;
 
         grade = _other.grade;
-        lastUpdated = Util.getCurrentDate();
 
         student = _other.student;
         exercise = _other.exercise;
+
+        touch();
     }
 }

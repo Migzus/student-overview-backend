@@ -39,6 +39,19 @@ public class Exercise extends Model {
     private Lecture lecture;
 
     public Exercise() {
+        touch();
+    }
+
+    public Exercise(String name, String description, String linkToRepo, Lecture lecture) {
+        this.name = name;
+        this.description = description;
+        this.linkToRepo = linkToRepo;
+        this.lecture = lecture;
+
+        touch();
+    }
+
+    public void touch() {
         lastUpdated = Util.getCurrentDate();
     }
 
@@ -54,9 +67,10 @@ public class Exercise extends Model {
         name = _other.name;
         description = _other.description;
         linkToRepo = _other.linkToRepo;
-        lastUpdated = Util.getCurrentDate();
 
         evaluations = _other.evaluations;
         lecture = _other.lecture;
+
+        touch();
     }
 }
