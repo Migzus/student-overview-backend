@@ -1,3 +1,7 @@
+INSERT INTO role(name) VALUES ('NONE');
+INSERT INTO role(name) VALUES ('TEACHER');
+INSERT INTO role(name) VALUES ('MODERATOR');
+
 INSERT INTO teacher (first_name, last_name, email, phone) VALUES ('Zelda', 'Smith', 'zelda.smith@example.com', '12345678');
 INSERT INTO teacher (first_name, last_name, email, phone) VALUES ('Yvonne', 'Roberts', 'yvonne.roberts@example.com', '23456789');
 INSERT INTO teacher (first_name, last_name, email, phone) VALUES ('Xander', 'Miller', 'xander.miller@example.com', '34567890');
